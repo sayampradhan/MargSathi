@@ -275,7 +275,7 @@ elif "sidebar_query" in st.session_state:
 
 if active_query:
     if not GEMINI_API_KEY:
-        st.error("API Key not found! Please check your Streamlit secrets or environment variables.")
+        st.error("API Key not found! Please check your .env file configuration.")
     else:
         with st.chat_message("assistant"):
             # Step 1: Agent Generation
