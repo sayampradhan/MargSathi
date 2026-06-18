@@ -245,6 +245,14 @@ with st.sidebar:
         }
         st.rerun()
 
+    st.markdown("---")
+    st.subheader("Database Management")
+    if st.button("Initialize / Create Tables"):
+        with st.spinner("Creating tables in Supabase..."):
+            from database.database import init_db
+            init_db()
+            st.success("Database tables created successfully!")
+
 # -------------------------------------------------
 # Session State & Main Chat
 # -------------------------------------------------
