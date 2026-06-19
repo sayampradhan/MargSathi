@@ -306,13 +306,15 @@ if active_query:
                         **(trip_params or {})
                     )
 
-            # Step 2: Destination Images
-            with st.spinner("Loading destination gallery..."):
-                valid_results = []
-                with ThreadPoolExecutor(max_workers=8) as executor:
-                    results = list(executor.map(fetch_destination_image, names.get("destinations", [])))
+            is_trip_plan = names.get("is_trip_plan", False)
+            valid_results = []
 
-                valid_results = [r for r in results if r]
+            # Step 2: Destination Images
+            if is_trip_plan:
+                with st.spinner("Loading destination gallery..."):
+                    with ThreadPoolExecutor(max_workers=8) as executor:
+                        results = list(executor.map(fetch_destination_image, names.get("destinations", [])))
+                    valid_results = [r for r in results if r]
 
                 if valid_results:
                     st.subheader("📍 Destinations")
@@ -381,8 +383,8 @@ if active_query:
 
 
             # Step 4: Hotel Bookings
-            hotel_names = names.get("hotel", [])
-            hotel_cities = names.get("hotel_city", [])
+            hotel_names = names.get("hotel", []) if is_trip_plan else []
+            hotel_cities = names.get("hotel_city", []) if is_trip_plan else []
 
             if hotel_names and hotel_cities:
                 hotel_name = hotel_names[0]
@@ -437,7 +439,7 @@ if active_query:
                     )
 
             # Step 5: Weather Visualization
-            if agents.weather_agent.LAST_FETCHED_WEATHER:
+            if is_trip_plan and agents.weather_agent.LAST_FETCHED_WEATHER:
                 weather_data = agents.weather_agent.LAST_FETCHED_WEATHER
                 city = weather_data["city"]
                 forecast = weather_data["forecast"]
