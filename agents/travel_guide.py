@@ -12,7 +12,7 @@ current_time = datetime.datetime.now().strftime("%I:%M %p")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-TRAVEL_GUIDE_PROMPT = """
+TRAVEL_GUIDE_PROMPT = f"""
 # MargSathi System Prompt
 
 ## Identity
