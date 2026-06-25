@@ -654,7 +654,7 @@ def _render_tripadvisor_section(hotel):
     # Price range
     price_range = hotel.get("price_range")
     if price_range and price_range.get("minimum") and price_range.get("maximum"):
-        currency = price_range.get("currency", "USD")
+        currency = price_range.get("currency", "INR")
         st.markdown(f'<div class="ta-price-range">💰 {currency} {price_range["minimum"]} – {price_range["maximum"]} per night</div>', unsafe_allow_html=True)
 
     # Description
