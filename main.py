@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 from agents.travel_guide import get_response
 from agents.image_agent import fetch_destination_image, fetch_food_images
 from agents.hotel_agent import fetch_hotel_info
-from agents.restaurant_agent import fetch_restaurants
 
 import agents.weather_agent
 from utils.helpers import extract_names, hotel_booking
@@ -852,9 +851,9 @@ def render_rich_message(message):
                 unsafe_allow_html=True
             )
 
-    # Restaurants section
-    if message.get("restaurants_data"):
-        _render_restaurants_section(message["restaurants_data"])
+    # # Restaurants section
+    # if message.get("restaurants_data"):
+    #     _render_restaurants_section(message["restaurants_data"])
 
     if message.get("weather"):
         weather_data = message["weather"]
@@ -921,48 +920,48 @@ def render_rich_message(message):
             )
 
 
-def _render_restaurants_section(restaurants):
-    """Render a list of restaurant cards with images and embedded maps."""
-    if not restaurants:
-        return
+# def _render_restaurants_section(restaurants):
+#     """Render a list of restaurant cards with images and embedded maps."""
+#     if not restaurants:
+#         return
 
-    st.subheader("🍽️ Recommended Restaurants")
+#     st.subheader("🍽️ Recommended Restaurants")
 
-    for rest in restaurants:
-        name = rest.get("name", "")
-        image = rest.get("featured_image", "")
-        link = rest.get("link", "")
-        location = rest.get("parent_location", "")
-        coords = rest.get("coordinates", {})
-        lat = coords.get("latitude")
-        lon = coords.get("longitude")
+#     for rest in restaurants:
+#         name = rest.get("name", "")
+#         image = rest.get("featured_image", "")
+#         link = rest.get("link", "")
+#         location = rest.get("parent_location", "")
+#         coords = rest.get("coordinates", {})
+#         lat = coords.get("latitude")
+#         lon = coords.get("longitude")
 
-        # Restaurant card with image
-        card_html = '<div class="rest-card">'
-        if image:
-            card_html += f'<img src="{image}" class="rest-card-img" alt="{name}" />'
-        card_html += '<div class="rest-card-body">'
-        card_html += f'<div class="rest-card-name">{name}</div>'
-        if location:
-            card_html += f'<div class="rest-card-location">📍 {location}</div>'
-        card_html += '<div class="rest-card-links">'
-        if link:
-            card_html += f'<a href="{link}" target="_blank" class="rest-link-btn rest-link-ta">View on TripAdvisor</a>'
-        if lat and lon:
-            map_url = f"https://maps.google.com/?q={lat},{lon}"
-            card_html += f'<a href="{map_url}" target="_blank" class="rest-link-btn rest-link-map">Open in Maps</a>'
-        card_html += '</div></div></div>'
-        st.markdown(card_html, unsafe_allow_html=True)
+#         # Restaurant card with image
+#         card_html = '<div class="rest-card">'
+#         if image:
+#             card_html += f'<img src="{image}" class="rest-card-img" alt="{name}" />'
+#         card_html += '<div class="rest-card-body">'
+#         card_html += f'<div class="rest-card-name">{name}</div>'
+#         if location:
+#             card_html += f'<div class="rest-card-location">📍 {location}</div>'
+#         card_html += '<div class="rest-card-links">'
+#         if link:
+#             card_html += f'<a href="{link}" target="_blank" class="rest-link-btn rest-link-ta">View on TripAdvisor</a>'
+#         if lat and lon:
+#             map_url = f"https://maps.google.com/?q={lat},{lon}"
+#             card_html += f'<a href="{map_url}" target="_blank" class="rest-link-btn rest-link-map">Open in Maps</a>'
+#         card_html += '</div></div></div>'
+#         st.markdown(card_html, unsafe_allow_html=True)
 
-        # Embedded Google Map
-        if lat and lon:
-            map_query = f"{name}+{location}".replace(" ", "+")
-            st.iframe(
-                f"https://maps.google.com/maps?q={map_query}&t=&z=15&ie=UTF8&iwloc=&output=embed",
-                height=250
-            )
+#         # Embedded Google Map
+#         if lat and lon:
+#             map_query = f"{name}+{location}".replace(" ", "+")
+#             st.iframe(
+#                 f"https://maps.google.com/maps?q={map_query}&t=&z=15&ie=UTF8&iwloc=&output=embed",
+#                 height=250
+#             )
 
-    st.markdown("---")
+#     st.markdown("---")
 
 
 # -------------------------------------------------
@@ -1176,17 +1175,17 @@ if active_query:
                         except Exception as e:
                             logger.error(f"Failed to fetch TripAdvisor data: {e}")
 
-                # Fetch restaurant details
-                restaurant_names = names.get("restaurants", []) if is_trip_plan else []
-                if restaurant_names:
-                    with st.spinner("Loading restaurant details..."):
-                        try:
-                            rest_data = fetch_restaurants(restaurant_names)
-                            if rest_data:
-                                msg_data["restaurants_data"] = rest_data
-                                logger.info(f"Fetched {len(rest_data)} restaurants from TripAdvisor")
-                        except Exception as e:
-                            logger.error(f"Failed to fetch restaurant data: {e}")
+                # # Fetch restaurant details
+                # restaurant_names = names.get("restaurants", []) if is_trip_plan else []
+                # if restaurant_names:
+                #     with st.spinner("Loading restaurant details..."):
+                #         try:
+                #             rest_data = fetch_restaurants(restaurant_names)
+                #             if rest_data:
+                #                 msg_data["restaurants_data"] = rest_data
+                #                 logger.info(f"Fetched {len(rest_data)} restaurants from TripAdvisor")
+                #         except Exception as e:
+                #             logger.error(f"Failed to fetch restaurant data: {e}")
 
                 if is_trip_plan and agents.weather_agent.LAST_FETCHED_WEATHER:
                     msg_data["weather"] = agents.weather_agent.LAST_FETCHED_WEATHER
