@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 # Import refactored agents and utils
 from agents.travel_guide import get_response
-from agents.image_agent import fetch_destination_image
+from agents.image_agent import fetch_destination_image, fetch_food_images
 import agents.weather_agent
 from utils.helpers import extract_names, hotel_booking
 from config import GEMINI_API_KEY
@@ -284,7 +284,7 @@ if active_query:
     else:
         with st.chat_message("assistant"):
             # Step 1: Agent Generation
-            with st.spinner("Planning your journey..."):
+            with st.spinner("Thinking..."):
                 # Clear the old fetched weather from this state just in case
                 agents.weather_agent.LAST_FETCHED_WEATHER = None
                 
@@ -319,7 +319,9 @@ if active_query:
                 with st.spinner("Loading destination gallery..."):
                     with ThreadPoolExecutor(max_workers=8) as executor:
                         results = list(executor.map(fetch_destination_image, names.get("destinations", [])))
+                        food_results = list(executor.map(fetch_food_images, names.get("foods", [])))
                     valid_results = [r for r in results if r]
+                    valid_food_results = [r for r in food_results if r]
 
                 if valid_results:
                     st.subheader("📍 Destinations")
@@ -362,6 +364,7 @@ if active_query:
                     <div class="scrolling-gallery">
                     """
 
+
                     for result in valid_results:
                         place = result["place"]
                         images = result.get("image", [])
@@ -381,6 +384,62 @@ if active_query:
 
                     gallery_html += "</div>"
                     st.html(gallery_html)
+                    st.markdown("---")
+
+
+                if valid_food_results:
+                    st.subheader("🍜 Local Foods")
+                    gallery_html = """
+                    <style>
+                    .scrolling-gallery {
+                        display: flex;
+                        overflow-x: auto;
+                        gap: 20px;
+                        padding: 10px;
+                        scroll-behavior: smooth;
+                    }
+                    .scrolling-gallery::-webkit-scrollbar {
+                        height: 8px;
+                    }
+                    .scrolling-gallery::-webkit-scrollbar-thumb {
+                        background: #94a3b8;
+                        border-radius: 10px;
+                    }
+                    .image-card {
+                        flex: 0 0 auto;
+                        width: 280px;
+                        background: white;
+                        border-radius: 18px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    }
+                    .image-card img {
+                        width: 100%;
+                        height: 200px;
+                        object-fit: cover;
+                    }
+                    .image-title {
+                        padding: 12px;
+                        text-align: center;
+                        font-weight: 600;
+                        font-size: 16px;
+                    }
+                    </style>
+                    <div class="scrolling-gallery">
+                    """
+
+                for result in valid_food_results:
+                    food = result["food"]
+                    images = result.get("image", [])
+                    if not images:
+                        continue
+
+                    img_url = images[0].get("url")
+                    if not img_url:
+                        continue
+
+                    st.subheader(f"🍽️ {food}")
+                    st.image(img_url, use_column_width=True)
                     st.markdown("---")
 
             # Step 3: Core Itinerary
