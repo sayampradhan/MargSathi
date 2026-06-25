@@ -3,7 +3,7 @@ import datetime
 # pyrefly: ignore [missing-import]
 from google.genai import types
 import logging
-from config import GEMINI_API_KEY, GEMINI_MODEL_LITE
+from config import GEMINI_API_KEY, GEMINI_MODEL_DEFAULT
 from agents.weather_agent import get_weather
 
 current_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -167,7 +167,7 @@ class TravelGuideAgent:
             self.client = genai.Client(api_key=GEMINI_API_KEY)
             # Initialize the chat session with tools and system prompt
             self.chat = self.client.chats.create(
-                model=GEMINI_MODEL_LITE,
+                model=GEMINI_MODEL_DEFAULT,
                 config=types.GenerateContentConfig(
                     system_instruction=TRAVEL_GUIDE_PROMPT,
                     tools=[get_weather],
