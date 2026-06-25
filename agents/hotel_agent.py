@@ -1,6 +1,6 @@
 import requests
 import logging
-from config import TRIPADVISOR_API_KEY
+from config import TRIPADVISOR_API_KEY, FALLBACK_API_KEY
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -11,6 +11,24 @@ HEADERS = {
     "x-rapidapi-host": "tripadvisor-scraper.p.rapidapi.com",
     "Content-Type": "application/json"
 }
+
+def make_tripadvisor_request(url, params):
+    import time
+    try:
+        response = requests.get(url, headers=HEADERS, params=params, timeout=20)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as e:
+        status_code = e.response.status_code
+        if status_code in [403, 429]:
+            logger.warning(f"Primary API key failed with {status_code}. Retrying with fallback key...")
+            fallback_headers = HEADERS.copy()
+            fallback_headers['x-rapidapi-key'] = FALLBACK_API_KEY
+            time.sleep(1)
+            response = requests.get(url, headers=fallback_headers, params=params, timeout=20)
+            response.raise_for_status()
+            return response.json()
+        raise e
 
 
 def search_hotel(hotel_name, city_name):
@@ -28,14 +46,7 @@ def search_hotel(hotel_name, city_name):
     }
 
     try:
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            params=params,
-            timeout=20
-        )
-        response.raise_for_status()
-        data = response.json()
+        data = make_tripadvisor_request(url, params)
 
         # The API typically returns a list of results
         if isinstance(data, list) and len(data) > 0:
@@ -67,16 +78,8 @@ def get_hotel_details(tripadvisor_url, currency="USD"):
     }
 
     try:
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            params=params,
-            timeout=20
-        )
-
-        response.raise_for_status()
-
-        return response.json()
+        data = make_tripadvisor_request(url, params)
+        return data
 
     except Exception as e:
         logger.error(f"Hotel Detail API Error: {e}")
