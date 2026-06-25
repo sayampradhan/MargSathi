@@ -295,6 +295,10 @@ if active_query:
                     cache_key = hashlib.sha256(active_query.encode('utf-8')).hexdigest()
                 
                 cached_trip = get_cached_trip(cache_key)
+                
+                # Bypass cache to test new prompt
+                cached_trip = None 
+                
                 if cached_trip:
                     logger.info("Trip cache hit!")
                     response = cached_trip["response"]

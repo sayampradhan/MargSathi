@@ -113,7 +113,7 @@ def fetch_food_images(food: str) -> Optional[Dict]:
     """
     Fetches food images.
     """
-    search_query = food + " food"  # Append "food" to the query for better results
+    search_query = food  # Removing ' food' suffix as it breaks wikimedia search
     try:
         images = get_best_images(search_query, limit=1)
         if images and images.get("results"):
