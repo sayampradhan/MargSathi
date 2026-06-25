@@ -24,4 +24,5 @@ DATABASE_URL = os.getenv("DATABASE_URL") or SECRETS.get("DATABASE_URL", "postgre
 # Models
 GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 GEMINI_MODEL_LITE = "gemini-2.5-flash-lite"
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL1 = "llama-3.3-70b-versatile"
+GROQ_MODEL = "llama-3.1-8b-instant"
