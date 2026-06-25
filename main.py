@@ -264,7 +264,45 @@ def render_rich_message(message):
         
     st.markdown(message.get("content", ""))
     
-    if message.get("hotel_info"):
+    # TripAdvisor section first
+    if message.get("tripadvisor_data"):
+
+        hotel = message["tripadvisor_data"]
+
+        st.subheader("🏨 Accommodation Details")
+
+        if hotel.get("featured_image"):
+            st.image(
+                hotel["featured_image"],
+                use_container_width=True
+            )
+
+        st.markdown(f"## {hotel.get('name')}")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric("⭐ Rating", hotel.get("rating"))
+
+        with col2:
+            st.metric("📝 Reviews", hotel.get("reviews"))
+
+        with col3:
+            st.metric("🏨 Class", hotel.get("hotel_class"))
+
+        st.write(hotel.get("description"))
+
+        st.write("📍", hotel.get("address"))
+        st.write("📞", hotel.get("phone"))
+        st.write("📧", hotel.get("email"))
+
+        # # Existing section remains
+        # st.subheader("🛏️ Book Hotel")
+
+        # st.write(f"**Hotel:** {h['name']}")
+        # st.write(f"**City:** {h['city']}")
+
+        col1, col2 = st.columns(2)
         h = message["hotel_info"]
         st.subheader("🛏️ Book Hotel")
         st.write(f"**Hotel:** {h['name']}")
