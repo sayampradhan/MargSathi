@@ -577,7 +577,16 @@ with st.sidebar:
     food_allergy = st.selectbox("Food Allergy", ["Yes", "No"])
     travelers = st.selectbox("Travel Type", ["Solo", "Couple", "Group", "Family", "Other"])
     further_preferences = st.selectbox("Further preferences", ["Yes", "No"])
-    currency = st.selectbox("Currency", ["USD", "INR", "EUR", "GBP", "AUD", "CAD", "SGD", "AED"])
+    currency = st.selectbox("Currency", [
+    "INR",
+    "AED",
+    "AUD",
+    "CAD",
+    "EUR",
+    "GBP",
+    "SGD",
+    "USD"
+])
 
     if st.button("Generate Trip Plan"):
         query = f"""
