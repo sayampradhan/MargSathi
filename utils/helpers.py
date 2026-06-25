@@ -56,6 +56,7 @@ def extract_names(itinerary_text: str) -> dict:
         "hotel": [],
         "hotel_city": [],
         "foods": [],
+        "restaurants": [],
     }}
 
     Rules:
@@ -104,6 +105,10 @@ def extract_names(itinerary_text: str) -> dict:
                                 "items": {"type": "STRING"}
                             },
                             "foods": {
+                                "type": "ARRAY",
+                                "items": {"type": "STRING"}
+                            },
+                            "restaurants": {
                                 "type": "ARRAY",
                                 "items": {"type": "STRING"}
                             }
