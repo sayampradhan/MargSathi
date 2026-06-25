@@ -8,7 +8,7 @@ def extract_names_with_groq(extraction_prompt: str) -> dict:
     """Fallback extraction using Groq's high-speed API if Gemini fails."""
     if not GROQ_API_KEY:
         print("Error: GROQ_API_KEY not set for fallback.")
-        return {"destinations": [], "hotel": [], "hotel_city": [], "foods": []}
+        return {"is_trip_plan": False, "destinations": [], "hotel": [], "hotel_city": [], "foods": []}
 
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
@@ -32,6 +32,7 @@ def extract_names_with_groq(extraction_prompt: str) -> dict:
         
         parsed = json.loads(content)
         return {
+            "is_trip_plan": parsed.get("is_trip_plan", False),
             "destinations": parsed.get("destinations", []),
             "hotel": parsed.get("hotel", []),
             "hotel_city": parsed.get("hotel_city", []),
@@ -39,7 +40,7 @@ def extract_names_with_groq(extraction_prompt: str) -> dict:
         }
     except Exception as e:
         print(f"Error during JSON extraction via Groq fallback: {e}")
-        return {"destinations": [], "hotel": [], "hotel_city": [], "foods": []}
+        return {"is_trip_plan": False, "destinations": [], "hotel": [], "hotel_city": [], "foods": []}
 
 def extract_names(itinerary_text: str) -> dict:
     """
@@ -47,19 +48,22 @@ def extract_names(itinerary_text: str) -> dict:
     using the Gemini model, with an automatic fallback to Groq.
     """
     extraction_prompt = f"""
-    Extract the following from the travel itinerary.
+    Analyze the text and extract the following information.
+
+    First, determine if the text provided is a comprehensive travel itinerary/plan OR if it is just a conversational message/follow-up question. Set "is_trip_plan" to true ONLY if the text contains a detailed travel plan.
 
     Return ONLY valid JSON.
 
     {{
+        "is_trip_plan": false,
         "destinations": [],
         "hotel": [],
         "hotel_city": [],
         "foods": [],
-        "restaurants": [],
     }}
 
     Rules:
+    - is_trip_plan = true if the text is a detailed travel itinerary. false if it's just a question or conversation.
     - destinations = stations, busstands, tourist places, attractions, landmarks, beaches, temples, museums etc. (every place that is included in the travel plan no matter if it is railway station or bustand or even airport)
     - hotel = hotel name only
     - hotel city = name of the city of the hotel
@@ -92,6 +96,9 @@ def extract_names(itinerary_text: str) -> dict:
                     "response_schema": {
                         "type": "OBJECT",
                         "properties": {
+                            "is_trip_plan": {
+                                "type": "BOOLEAN"
+                            },
                             "destinations": {
                                 "type": "ARRAY",
                                 "items": {"type": "STRING"}
@@ -123,6 +130,7 @@ def extract_names(itinerary_text: str) -> dict:
             data = json.loads(response.text)
 
             return {
+                "is_trip_plan": data.get("is_trip_plan", False),
                 "destinations": data.get("destinations", []),
                 "hotel": data.get("hotel", []),
                 "hotel_city": data.get("hotel_city", []),
