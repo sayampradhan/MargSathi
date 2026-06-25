@@ -1,5 +1,6 @@
 from google import genai
 import datetime
+# pyrefly: ignore [missing-import]
 from google.genai import types
 import logging
 from config import GEMINI_API_KEY, GEMINI_MODEL_LITE
@@ -139,7 +140,7 @@ Provide common scams, safe practices, and emergency numbers.
 3. Day-by-Day Itinerary (must be time-to-time and actionable)
 4. Travel Route & Movement Plan
 5. Accommodation Recommendations
-6. Food & Dining Guide
+6. Food & Dining Guide (must include local food recommendations)
 7. Budget Analysis
 8. Safety, Essentials & Packing Guide
 9. Return Journey Plan

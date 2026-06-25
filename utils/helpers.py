@@ -69,7 +69,7 @@ def extract_names(itinerary_text: str) -> dict:
     - destinations = stations, busstands, tourist places, attractions, landmarks, beaches, temples, museums etc. (every place that is included in the travel plan no matter if it is railway station or bustand or even airport)
     - hotel = hotel name only (eg., "Taj Hotel" for "Taj Hotel in Panaji")
     - hotel city = name of the city of the hotel (eg., "Panaji" for "Taj Hotel in Panaji")
-    - foods = dish names only (e.g., "Pav Bhaji", "Chicken Biryani" etc.)
+    - foods = local dish names only (e.g., "Pav Bhaji", "Chicken Biryani" etc.)
     - restaurants = restaurant names, along with the city name if available (e.g., "Taj Mahal Restaurant, Delhi")
     - remove duplicates
     - do not include the place of departure
