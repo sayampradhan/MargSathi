@@ -136,7 +136,7 @@ Provide common scams, safe practices, and emergency numbers.
 
 1. Trip Overview & Weather Insights
 2. Comprehensive Travel Plan
-3. Day-by-Day Itinerary
+3. Day-by-Day Itinerary (must be time-to-time and actionable)
 4. Travel Route & Movement Plan
 5. Accommodation Recommendations
 6. Food & Dining Guide
