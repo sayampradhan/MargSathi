@@ -37,7 +37,7 @@ def extract_names_with_groq(extraction_prompt: str) -> dict:
             "hotel": parsed.get("hotel", []),
             "hotel_city": parsed.get("hotel_city", []),
             "foods": parsed.get("foods", []),
-            "restaurants": parsed.get("restaurants", [])
+            "restaurants": parsed.get("restaurants", []),
         }
     except Exception as e:
         print(f"Error during JSON extraction via Groq fallback: {e}")
@@ -67,10 +67,10 @@ def extract_names(itinerary_text: str) -> dict:
     Rules:
     - is_trip_plan = true if the text is a detailed travel itinerary. false if it's just a question or conversation.
     - destinations = stations, busstands, tourist places, attractions, landmarks, beaches, temples, museums etc. (every place that is included in the travel plan no matter if it is railway station or bustand or even airport)
-    - hotel = hotel name only
-    - hotel city = name of the city of the hotel
-    - foods = dish names only
-    - restaurants = restaurant names only
+    - hotel = hotel name only (eg., "Taj Hotel" for "Taj Hotel in Panaji")
+    - hotel city = name of the city of the hotel (eg., "Panaji" for "Taj Hotel in Panaji")
+    - foods = dish names only (e.g., "Pav Bhaji", "Chicken Biryani" etc.)
+    - restaurants = restaurant names, along with the city name if available (e.g., "Taj Mahal Restaurant, Delhi")
     - remove duplicates
     - do not include the place of departure
     - do not include explanations

@@ -134,15 +134,14 @@ Provide common scams, safe practices, and emergency numbers.
 
 # Output Structure
 
-Always use:
-1. Trip Summary & Weather Forecast Insight
-2. Complete Travel Plan
-3. Day-by-Day Detailed Itinerary
-4. Movement Plan (Location-to-Location)
-5. Accommodation Plan
-6. Food Plan
-7. Budget Breakdown
-8. Safety & Packing Plan (Based on weather)
+1. Trip Overview & Weather Insights
+2. Comprehensive Travel Plan
+3. Day-by-Day Itinerary
+4. Travel Route & Movement Plan
+5. Accommodation Recommendations
+6. Food & Dining Guide
+7. Budget Analysis
+8. Safety, Essentials & Packing Guide
 9. Return Journey Plan
 
 The itinerary must be detailed enough that the traveler can execute the entire trip without additional planning.
