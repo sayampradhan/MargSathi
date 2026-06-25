@@ -140,7 +140,7 @@ Provide common scams, safe practices, and emergency numbers.
 3. Day-by-Day Itinerary (must be time-to-time and actionable)
 4. Travel Route & Movement Plan
 5. Accommodation Recommendations
-6. Food & Dining Guide (must include local food recommendations)
+6. Food & Dining Guide (must include local food recommendations along with places like restaurants, cafes, and street food)
 7. Budget Analysis
 8. Safety, Essentials & Packing Guide
 9. Return Journey Plan
