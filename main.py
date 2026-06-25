@@ -535,6 +535,7 @@ st.markdown(
         Developed by <b><a href="https://www.linkedin.com/in/sayam-pradhan/" target="_blank">
             Sayam
         </a></b>
+        <br>
         Under the supervision of <b>Prof. <a href="https://www.nitrkl.ac.in/~deyp/" target="_blank">
             Prasenjit Dey
         </a></b><br>
