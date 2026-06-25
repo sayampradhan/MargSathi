@@ -29,6 +29,8 @@ def search_restaurant(query: str) -> Optional[Dict]:
         "query": query,
     }
 
+    import time
+    time.sleep(1) # Add delay to prevent rate limiting
     try:
         response = requests.get(
             url,

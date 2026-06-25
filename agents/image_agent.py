@@ -29,11 +29,16 @@ def search_wikimedia_images(query: str, limit: int = 5) -> List[Dict[str, str]]:
         "format": "json"
     }
 
+    import time
+    import random
+    
     headers = {
         "User-Agent": "MargSathiBot/1.0"
     }
 
     try:
+        # Add a random jitter (0.1 to 1.5 seconds) to prevent hammering the API concurrently
+        time.sleep(random.uniform(0.1, 1.5))
         r = requests.get(url, params=params, headers=headers, timeout=10)
         r.raise_for_status()
         data = r.json()

@@ -269,7 +269,7 @@ class TravelGuideAgent:
                 
         except Exception as e:
             logger.error(f"Error during Groq fallback: {e}")
-            return "An error occurred while generating your travel plan. Both Gemini and Groq APIs are unavailable."
+            return "An error occurred while generating your travel plan. Currently unavailable."
 
 # Create a singleton instance to maintain chat history in session
 travel_agent = TravelGuideAgent()
