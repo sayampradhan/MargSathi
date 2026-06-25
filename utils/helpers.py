@@ -61,6 +61,7 @@ def extract_names(itinerary_text: str) -> dict:
         "hotel": [],
         "hotel_city": [],
         "foods": [],
+        "restaurants": []
     }}
 
     Rules:
@@ -69,6 +70,7 @@ def extract_names(itinerary_text: str) -> dict:
     - hotel = hotel name only
     - hotel city = name of the city of the hotel
     - foods = dish names only
+    - restaurants = restaurant names only
     - remove duplicates
     - do not include the place of departure
     - do not include explanations
