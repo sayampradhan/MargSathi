@@ -113,6 +113,7 @@ def fetch_food_images(food: str) -> Optional[Dict]:
     """
     Fetches food images.
     """
+    food = food + " food"  # Append "food" to the query for better results
     try:
         images = get_best_images(food, limit=1)
         if images and images.get("results"):
