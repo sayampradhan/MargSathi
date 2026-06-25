@@ -4,6 +4,7 @@ from database.database import Base
 
 class ChatHistory(Base):
     __tablename__ = "chat_history"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     user_query = Column(Text, nullable=False)

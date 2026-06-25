@@ -1194,7 +1194,7 @@ if active_query:
                 if restaurant_names:
                     with st.spinner("Loading restaurant details..."):
                         try:
-                            rest_data = fetch_restaurants(restaurant_names, currency_param)
+                            rest_data = fetch_restaurants(restaurant_names)
                             if rest_data:
                                 msg_data["restaurants_data"] = rest_data
                                 logger.info(f"Fetched {len(rest_data)} restaurants from TripAdvisor")
