@@ -51,7 +51,7 @@ def search_hotel(hotel_name, city_name):
     return None
 
 
-def get_hotel_details(tripadvisor_url):
+def get_hotel_details(tripadvisor_url, currency="USD"):
     """
     Returns hotel details and reviews from TripAdvisor
     """
@@ -62,7 +62,8 @@ def get_hotel_details(tripadvisor_url):
     url = "https://tripadvisor-scraper.p.rapidapi.com/hotels/detail"
 
     params = {
-        "query": tripadvisor_url
+        "query": tripadvisor_url,
+        "currency": currency
     }
 
     try:
@@ -82,7 +83,7 @@ def get_hotel_details(tripadvisor_url):
         return None
 
 
-def fetch_hotel_info(hotel_name, city_name):
+def fetch_hotel_info(hotel_name, city_name, currency="USD"):
     """
     Main entry point: searches for a hotel by name+city, then fetches full details.
     Returns the full TripAdvisor hotel detail dict, or None.
@@ -99,8 +100,8 @@ def fetch_hotel_info(hotel_name, city_name):
     if not hotel_url:
         # Fallback: try get_hotel_details directly with the name as query
         logger.info(f"Search returned no URL, trying direct detail query...")
-        return get_hotel_details(f"{hotel_name} {city_name}")
+        return get_hotel_details(f"{hotel_name} {city_name}", currency=currency)
 
     # Step 2: Get full details using the TripAdvisor URL
     logger.info(f"Found hotel URL: {hotel_url}")
-    return get_hotel_details(hotel_url)
+    return get_hotel_details(hotel_url, currency=currency)
