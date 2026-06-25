@@ -39,13 +39,25 @@ def search_restaurant(query: str) -> Optional[Dict]:
         response.raise_for_status()
         data = response.json()
 
+        if isinstance(data, str):
+            try:
+                import json
+                data = json.loads(data)
+            except Exception:
+                logger.error(f"Unexpected API response format (string): {data[:100]}")
+                return None
+
+        if not isinstance(data, dict):
+            logger.error(f"Unexpected API response type: {type(data)}")
+            return None
+
         results = data.get("results", [])
         if not results:
             return None
 
         # Prefer actual restaurant entities over city/state results
         for result in results:
-            if result.get("is_tripadvisor_entity") and result.get("place_type") == "RESTAURANT":
+            if isinstance(result, dict) and result.get("is_tripadvisor_entity") and result.get("place_type") == "RESTAURANT":
                 return {
                     "name": result.get("name", ""),
                     "link": result.get("link", ""),
@@ -57,6 +69,9 @@ def search_restaurant(query: str) -> Optional[Dict]:
 
         # Fallback: return the first result even if it's a city
         first = results[0]
+        if not isinstance(first, dict):
+            return None
+
         return {
             "name": first.get("name", ""),
             "link": first.get("link", ""),
