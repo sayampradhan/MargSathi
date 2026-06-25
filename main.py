@@ -535,7 +535,7 @@ st.markdown(
         Developed by <b><a href="https://www.linkedin.com/in/sayam-pradhan/" target="_blank">
             Sayam
         </a></b><br>
-        Under the supervision of Prof. <b><a href="https://www.nitrkl.ac.in/~deyp/" target="_blank">
+        Under the supervision of Prof. <b><a href="https://www.nitrkl.ac.in/CS/~deyp/" target="_blank">
             Prasenjit Dey
         </a></b><br>
         National Institute of Technology Rourkela
