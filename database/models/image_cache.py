@@ -4,7 +4,6 @@ from database.database import Base
 
 class ImageCache(Base):
     __tablename__ = "image_cache"
-    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     place = Column(String, index=True, nullable=False, unique=True)

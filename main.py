@@ -577,16 +577,6 @@ with st.sidebar:
     food_allergy = st.selectbox("Food Allergy", ["Yes", "No"])
     travelers = st.selectbox("Travel Type", ["Solo", "Couple", "Group", "Family", "Other"])
     further_preferences = st.selectbox("Further preferences", ["Yes", "No"])
-    currency = st.selectbox("Currency", [
-    "INR",
-    "AED",
-    "AUD",
-    "CAD",
-    "EUR",
-    "GBP",
-    "SGD",
-    "USD"
-])
 
     if st.button("Generate Trip Plan"):
         query = f"""
@@ -600,8 +590,7 @@ with st.sidebar:
         Food preferences: {food_preference},
         Food allergies: {food_allergy},
         Mode of transport to destination: {mode_of_transport},
-        Further preferences to ask: {further_preferences},
-        Currency: {currency}
+        Further preferences to ask: {further_preferences}
 
         If further preferences is "No", then don't ask further questions and go straight on and generate the full trip plan.
 
@@ -619,8 +608,7 @@ with st.sidebar:
             "start_date": str(start_date),
             "end_date": str(end_date),
             "budget": budget,
-            "travel_type": travelers,
-            "currency": currency
+            "travel_type": travelers
         }
         st.rerun()
 
@@ -1181,8 +1169,7 @@ if active_query:
                     # Fetch TripAdvisor details
                     with st.spinner("Loading hotel details from TripAdvisor..."):
                         try:
-                            currency_param = trip_params.get("currency", "INR") if trip_params else "INR"
-                            ta_data = fetch_hotel_info(hotel_name, city_name, currency=currency_param)
+                            ta_data = fetch_hotel_info(hotel_name, city_name)
                             if ta_data:
                                 msg_data["tripadvisor_data"] = ta_data
                                 logger.info(f"TripAdvisor data fetched for {hotel_name}")

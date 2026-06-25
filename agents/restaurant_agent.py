@@ -2,7 +2,7 @@ import requests
 import logging
 from typing import List, Dict, Optional
 from concurrent.futures import ThreadPoolExecutor
-from config import TRIPADVISOR_API_KEY, FALLBACK_API_KEY
+from config import TRIPADVISOR_API_KEY
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -13,24 +13,6 @@ HEADERS = {
     "x-rapidapi-host": "tripadvisor-scraper.p.rapidapi.com",
     "Content-Type": "application/json"
 }
-
-def make_tripadvisor_request(url, params):
-    import time
-    try:
-        response = requests.get(url, headers=HEADERS, params=params, timeout=15)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.HTTPError as e:
-        status_code = e.response.status_code
-        if status_code in [403, 429]:
-            logger.warning(f"Primary API key failed with {status_code}. Retrying with fallback key...")
-            fallback_headers = HEADERS.copy()
-            fallback_headers['x-rapidapi-key'] = FALLBACK_API_KEY
-            time.sleep(1)
-            response = requests.get(url, headers=fallback_headers, params=params, timeout=15)
-            response.raise_for_status()
-            return response.json()
-        raise e
 
 
 def search_restaurant(query: str) -> Optional[Dict]:
@@ -47,10 +29,15 @@ def search_restaurant(query: str) -> Optional[Dict]:
         "query": query,
     }
 
-    import time
-    time.sleep(1) # Add delay to prevent rate limiting
     try:
-        data = make_tripadvisor_request(url, params)
+        response = requests.get(
+            url,
+            headers=HEADERS,
+            params=params,
+            timeout=15
+        )
+        response.raise_for_status()
+        data = response.json()
 
         if isinstance(data, str):
             try:

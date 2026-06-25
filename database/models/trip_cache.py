@@ -5,7 +5,6 @@ from database.database import Base
 
 class TripCache(Base):
     __tablename__ = "trip_cache"
-    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     cache_key = Column(String, unique=True, index=True, nullable=False)

@@ -3,7 +3,7 @@ import datetime
 # pyrefly: ignore [missing-import]
 from google.genai import types
 import logging
-from config import GEMINI_API_KEY, GEMINI_MODEL_DEFAULT
+from config import GEMINI_API_KEY, GEMINI_MODEL_LITE
 from agents.weather_agent import get_weather
 
 current_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -167,7 +167,7 @@ class TravelGuideAgent:
             self.client = genai.Client(api_key=GEMINI_API_KEY)
             # Initialize the chat session with tools and system prompt
             self.chat = self.client.chats.create(
-                model=GEMINI_MODEL_DEFAULT,
+                model=GEMINI_MODEL_LITE,
                 config=types.GenerateContentConfig(
                     system_instruction=TRAVEL_GUIDE_PROMPT,
                     tools=[get_weather],
@@ -269,7 +269,7 @@ class TravelGuideAgent:
                 
         except Exception as e:
             logger.error(f"Error during Groq fallback: {e}")
-            return "An error occurred while generating your travel plan. Currently unavailable."
+            return "An error occurred while generating your travel plan. Both Gemini and Groq APIs are unavailable."
 
 # Create a singleton instance to maintain chat history in session
 travel_agent = TravelGuideAgent()
