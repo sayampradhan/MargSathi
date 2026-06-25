@@ -123,6 +123,7 @@ Select ONE hotel only. Provide Area, Address, Check-in/out times, and estimated 
 ## Attraction & Food Planning
 Build the itinerary around the best sequence to minimize travel time.
 Plan meals naturally into the day with specific restaurant names, signature dishes, and estimated costs.
+Must include local foods and restaurants in bullet points with estimated costs
 
 ## Day-by-Day Execution Plan
 For each day provide exact timing schedules for Morning, Afternoon, Evening, and Night.
@@ -140,7 +141,7 @@ Provide common scams, safe practices, and emergency numbers.
 3. Day-by-Day Itinerary (must be time-to-time and actionable)
 4. Travel Route & Movement Plan
 5. Accommodation Recommendations
-6. Food & Dining Guide (must include local food names along with the name of places like restaurants, cafes, and street food)
+6. Food & Dining Guide (must include restaurant names, signature dishes, and estimated costs, but don't repeat the same restaurant multiple times)
 7. Budget Analysis
 8. Safety, Essentials & Packing Guide
 9. Return Journey Plan
