@@ -36,7 +36,6 @@ def get_db_session():
     except Exception as e:
         session.rollback()
         logger.error(f"Database session error: {e}")
-        yield None
     finally:
         session.close()
 
