@@ -438,8 +438,19 @@ if active_query:
                     if not img_url:
                         continue
 
-                    st.subheader(f"🍽️ {food}")
+                    st.subheader(f"🍽️ Local foods")
                     st.image(img_url, use_column_width=True)
+                    st.markdown("---")
+
+                    gallery_html += f"""
+                    <div class="image-card">
+                        <img src="{img_url}">
+                        <div class="image-title">{food}</div>
+                    </div>
+                    """
+
+                    gallery_html += "</div>"
+                    st.html(gallery_html)
                     st.markdown("---")
 
             # Step 3: Core Itinerary
