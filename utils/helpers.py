@@ -36,11 +36,12 @@ def extract_names_with_groq(extraction_prompt: str) -> dict:
             "destinations": parsed.get("destinations", []),
             "hotel": parsed.get("hotel", []),
             "hotel_city": parsed.get("hotel_city", []),
-            "foods": parsed.get("foods", [])
+            "foods": parsed.get("foods", []),
+            "restaurants": parsed.get("restaurants", [])
         }
     except Exception as e:
         print(f"Error during JSON extraction via Groq fallback: {e}")
-        return {"is_trip_plan": False, "destinations": [], "hotel": [], "hotel_city": [], "foods": []}
+        return {"is_trip_plan": False, "destinations": [], "hotel": [], "hotel_city": [], "foods": [], "restaurants": []}
 
 def extract_names(itinerary_text: str) -> dict:
     """
