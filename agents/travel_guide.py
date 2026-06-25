@@ -132,7 +132,7 @@ Provide common scams, safe practices, and emergency numbers.
 
 ---
 
-# Output Structure
+# Output Structure (all the sections below are to be subheaders)
 
 1. Trip Overview & Weather Insights
 2. Comprehensive Travel Plan
