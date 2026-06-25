@@ -428,26 +428,22 @@ if active_query:
                     <div class="scrolling-gallery">
                     """
 
-                for result in valid_food_results:
-                    food = result["food"]
-                    images = result.get("image", [])
-                    if not images:
-                        continue
+                    for result in valid_food_results:
+                        food = result["food"]
+                        images = result.get("image", [])
+                        if not images:
+                            continue
 
-                    img_url = images[0].get("url")
-                    if not img_url:
-                        continue
+                        img_url = images[0].get("url")
+                        if not img_url:
+                            continue
 
-                    st.subheader(f"🍽️ Local foods")
-                    st.image(img_url, use_column_width=True)
-                    st.markdown("---")
-
-                    gallery_html += f"""
-                    <div class="image-card">
-                        <img src="{img_url}">
-                        <div class="image-title">{food}</div>
-                    </div>
-                    """
+                        gallery_html += f"""
+                        <div class="image-card">
+                            <img src="{img_url}">
+                            <div class="image-title">{food}</div>
+                        </div>
+                        """
 
                     gallery_html += "</div>"
                     st.html(gallery_html)

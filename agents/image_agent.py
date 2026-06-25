@@ -113,25 +113,9 @@ def fetch_food_images(food: str) -> Optional[Dict]:
     """
     Fetches food images.
     """
-    food = food + " food"  # Append "food" to the query for better results
+    search_query = food + " food"  # Append "food" to the query for better results
     try:
-        images = get_best_images(food, limit=1)
-        if images and images.get("results"):
-            return {
-                "place": food,
-                "image": images["results"]
-            }
-    except Exception as e:
-        logger.error(f"Error fetching image for {food}: {e}")
-    return None
-
-
-def fetch_food_images(food: str) -> Optional[Dict]:
-    """
-    Fetches food images.
-    """
-    try:
-        images = get_best_images(food, limit=1)
+        images = get_best_images(search_query, limit=1)
         if images and images.get("results"):
             return {
                 "food": food,
