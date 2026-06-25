@@ -134,7 +134,8 @@ def extract_names(itinerary_text: str) -> dict:
                 "destinations": data.get("destinations", []),
                 "hotel": data.get("hotel", []),
                 "hotel_city": data.get("hotel_city", []),
-                "foods": data.get("foods", [])
+                "foods": data.get("foods", []),
+                "restaurants": data.get("restaurants", [])
             }
         except Exception as e:
             print(f"Attempt {attempt + 1} - Error during JSON extraction via Gemini: {e}")
