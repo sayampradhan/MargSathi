@@ -1190,8 +1190,16 @@ if active_query:
                 if is_trip_plan and agents.weather_agent.LAST_FETCHED_WEATHER:
                     msg_data["weather"] = agents.weather_agent.LAST_FETCHED_WEATHER
 
+                maps_list = []
                 if valid_results:
-                    msg_data["maps"] = [r["place"].replace(" ", "+") for r in valid_results]
+                    maps_list.extend([r["place"].replace(" ", "+") for r in valid_results])
+                
+                restaurant_names = names.get("restaurants", []) if is_trip_plan else []
+                for rest in restaurant_names:
+                    maps_list.append(rest.replace(" ", "+"))
+                    
+                if maps_list:
+                    msg_data["maps"] = maps_list
 
                 render_rich_message(msg_data)
             else:
